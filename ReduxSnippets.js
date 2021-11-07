@@ -32,7 +32,7 @@ const createClaim = (name, amountOfMoneyToCollect) =>{
 };
 
 
-// Reduces ( Departments )
+// Reducers ( Departments )
 
 const claimsHistory = (oldListOfClaims = [], action) =>{
       if(action.type === 'CREATE_CLAIM'){
@@ -68,3 +68,31 @@ const policies = (listOfPolicies = [], action) =>{
   
   return listOfPolicies;
 };
+
+const {createStore, combineReducers } = Redux;
+
+const ourDepartments= combineReducers({
+  accounting:accounting,
+  claimsHistory:claimsHistory,
+  policies:policies
+});
+
+const store= createStore(ourDepartments);
+
+//the store object represents our entire redux application, it contains references to all of our different reducers and to all of the state produced by the reducers
+
+//const action = createPolicy('Dibya', 20);
+//console.log(action);
+
+store.dispatch(createPolicy('Alex', 20));
+
+store.dispatch(createPolicy('Jim', 30));
+
+store.dispatch(createPolicy('Bob', 40));
+
+store.dispatch(createClaim('Alex',120));
+store.dispatch(createClaim('Jim',50));
+
+store.dispatch(deletePolicy('Bob'));
+
+console.log(store.getState());
